@@ -30,7 +30,7 @@ class Mongo implements AuthorizationCodeInterface,
 
     public function __construct($connection, $config = array())
     {
-        if ($connection instanceof \MongoDB) {
+        if ($connection) {
             $this->db = $connection;
         } else {
             if (!is_array($connection)) {
