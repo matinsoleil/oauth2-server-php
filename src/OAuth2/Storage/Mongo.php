@@ -110,7 +110,7 @@ class Mongo implements AuthorizationCodeInterface,
                 'scope'         => $scope,
                 'user_id'       => $user_id,
             );
-            $this->collection('client_table')->insert($client);
+            $this->collection('client_table')->insertOne($client);
         }
 
         return true;
