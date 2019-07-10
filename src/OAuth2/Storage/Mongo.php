@@ -31,7 +31,7 @@ class Mongo implements AuthorizationCodeInterface,
     public function __construct($connection, $config = array())
     {
         if ($connection) {
-            $this->db = $connection;
+              $this->db = $connection;
         } else {
             if (!is_array($connection)) {
                 throw new \InvalidArgumentException('First argument to OAuth2\Storage\Mongo must be an instance of MongoDB or a configuration array');
@@ -55,7 +55,10 @@ class Mongo implements AuthorizationCodeInterface,
     // Helper function to access a MongoDB collection by `type`:
     protected function collection($name)
     {
-        return $this->db->{$this->config[$name]};
+              
+        eval('$collection = $this->db->' . $name . ';');
+        return $collection;
+    
     }
 
     /* ClientCredentialsInterface */
@@ -155,7 +158,7 @@ class Mongo implements AuthorizationCodeInterface,
                 'user_id' => $user_id,
                 'scope' => $scope
             );
-            $this->collection('access_token_table')->insert($token);
+            $this->collection('access_token_table')->insertOne($token);
         }
 
         return true;
@@ -204,7 +207,7 @@ class Mongo implements AuthorizationCodeInterface,
                 'scope' => $scope,
                 'id_token' => $id_token,
             );
-            $this->collection('code_table')->insert($token);
+            $this->collection('code_table')->insertOne($token);
         }
 
         return true;
@@ -253,7 +256,7 @@ class Mongo implements AuthorizationCodeInterface,
             'expires' => $expires,
             'scope' => $scope
         );
-        $this->collection('refresh_token_table')->insert($token);
+        $this->collection('refresh_token_table')->insertOne($token);
 
         return true;
     }
@@ -298,7 +301,7 @@ class Mongo implements AuthorizationCodeInterface,
                 'first_name' => $firstName,
                 'last_name' => $lastName
             );
-            $this->collection('user_table')->insert($user);
+            $this->collection('user_table')->insertOne($user);
         }
 
         return true;
